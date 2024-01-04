@@ -4,22 +4,23 @@
 //go:build !wireinject
 // +build !wireinject
 
-package calc
+package wire
 
 import (
 	"context"
 	"github.com/Z00mZE/wireone/internal/config"
+	"github.com/Z00mZE/wireone/internal/server"
 	"github.com/Z00mZE/wireone/internal/storage/message"
 )
 
 // Injectors from wire.go:
 
-func initialize(ctx context.Context) (*Application, error) {
+func Application(ctx context.Context) (*server.Server, error) {
 	settings, err := config.NewConfig()
 	if err != nil {
 		return nil, err
 	}
 	storage := message.NewStorage(ctx, settings)
-	application := NewApplication(ctx, storage)
-	return application, nil
+	serverServer := server.NewCalc(ctx, storage)
+	return serverServer, nil
 }

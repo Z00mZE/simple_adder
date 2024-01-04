@@ -13,7 +13,8 @@ var WireSet = wire.NewSet(
 )
 
 type Settings struct {
-	AppName string `envconfig:"NAME" default:"vasya"`
+	AppName  string `envconfig:"NAME" default:"vasya"`
+	GrpcPort uint16 `envconfig:"GRPC_PORT" default:"50051"`
 }
 
 func NewConfig() (*Settings, error) {
@@ -27,4 +28,8 @@ func NewConfig() (*Settings, error) {
 
 func (c *Settings) Name() string {
 	return c.AppName
+}
+
+func (c *Settings) GrpcServerPort() uint16 {
+	return c.GrpcPort
 }

@@ -5,10 +5,14 @@ tasks:
       - task --list
   upgrade:
     desc: "Обновление пакетов приложения"
+    aliases:
+      - upg
     cmds:
       - go get -u all
       - go mod download
       - go mod tidy
+      - task:  install-wire
+      - task:  wiregen
 
   install-wire:
     internal: true
@@ -31,7 +35,7 @@ tasks:
   wiregen:
     aliases:
       - wg
-    desc: generate codegen wire di
+    desc: wire di codegen
     cmds:
       - wire gen ./...
 

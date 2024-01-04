@@ -1,9 +1,22 @@
 package main
 
 import (
-	"github.com/Z00mZE/wireone/internal/app/calc"
+	"context"
+	"fmt"
+	"os"
+
+	"github.com/Z00mZE/wireone/cmd/calc/wire"
 )
 
 func main() {
-	calc.Run()
+	ctx, ctxClose := context.WithCancel(context.Background())
+	defer ctxClose()
+
+	app, appError := wire.Application(ctx)
+	if appError != nil {
+		fmt.Println("error", appError)
+		os.Exit(1)
+	}
+
+	app.Run()
 }
