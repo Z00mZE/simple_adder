@@ -1,0 +1,46 @@
+version: "3"
+tasks:
+  default:
+    cmds:
+      - task --list
+  upgrade:
+    desc: "Обновление пакетов приложения"
+    cmds:
+      - go get -u all
+      - go mod download
+      - go mod tidy
+
+  install-wire:
+    internal: true
+    desc: "Installation Wire dependency injection."
+    cmds:
+      - go install github.com/google/wire/cmd/wire@latest
+
+  install-qodana:
+    internal: true
+    desc: "Installation JetBrains Qodana CLI."
+    cmds:
+      - go install github.com/JetBrains/qodana-cli@latest
+
+  install-utils:
+    desc: "Installation utility packages"
+    cmds:
+      - task: install-wire
+#      - task: install-qodana
+
+  wiregen:
+    aliases:
+      - wg
+    desc: generate codegen wire di
+    cmds:
+      - wire gen ./...
+
+  lint:
+    desc: "Запуск линтера"
+    cmds:
+      - golangci-lint run  -v
+
+  lint-fix:
+    desc: "Запуск линтера с авто-исправлением предупреждений"
+    cmds:
+      - golangci-lint run -v --fix

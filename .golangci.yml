@@ -1,0 +1,82 @@
+run:
+  concurrency: 10
+  deadline: 10m
+  issues-exit-code: 1
+  tests: true
+  skip-files:
+    - easyjson
+    - ".*\\.my\\.go$"
+    - "../../../go/pkg/mod/"
+  issue-exit-code: 2
+  go: '1.21'
+
+issues:
+  issues:
+    exclude:
+      - "Error return value of .((os\\.)?std(out|err)\\..*|.*Close|.*Flush|os\\.Remove(All)?|.*printf?|os\\.(Un)?Setenv). is not checked"
+      - "exported (type|method|function) (.+) should have comment or be unexported"
+      - "ST1000: at least one file in a package should have a package comment"
+    exclude-rules:
+    - path: _test\.go
+      linters:
+        - gomnd
+        - funlen
+        - dupl
+        - gocritic
+        - scopelint
+output:
+  format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+linters-settings:
+  govet:
+    check-shadowing: true
+  gofmt:
+    simplify: true
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+  gocyclo:
+    min-complexity: 25
+  misspell:
+    locale: US
+  prealloc:
+    simple: true
+    range-loops: true
+    for-loops: true
+  unparam:
+    check-exported: false
+  wsl:
+    force-err-cuddling: true
+  goimports:
+    local-prefixes: github.com/Z00mZE/wireone
+  forbidigo:
+    forbid:
+      - '^(fmt\.Print(|f|ln)|print(|ln))(# it looks like a forgotten debugging printing call)?$'
+linters:
+  disable-all: true
+  enable:
+    - govet
+    - revive
+    - gofmt
+    - errcheck
+    - misspell
+    - gocyclo
+    - ineffassign
+    - goimports
+    - nakedret
+    - unparam
+    - unused
+    - prealloc
+    - durationcheck
+    - gosimple
+    - bodyclose
+    - errorlint
+    - maintidx
+    - nakedret
+    - unconvert
+    - wsl
+    - ifshort
+    - forbidigo
+    - exportloopref 
+  fast: false
