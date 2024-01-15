@@ -1,0 +1,17 @@
+syntax = "proto3";
+package wireone;
+
+option go_package = "github.com/Z00mZE/simple_adder/pb";
+
+message SumRequest{
+  int64 a = 1;
+  int64 b = 2;
+}
+
+message SumResponse{
+  int64 c = 1;
+}
+
+service Calc{
+  rpc Sum(SumRequest)returns(SumResponse);
+}

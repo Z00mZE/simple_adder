@@ -49,7 +49,7 @@ linters-settings:
   wsl:
     force-err-cuddling: true
   goimports:
-    local-prefixes: github.com/Z00mZE/wireone
+    local-prefixes: github.com/Z00mZE/simple_adder
   forbidigo:
     forbid:
       - '^(fmt\.Print(|f|ln)|print(|ln))(# it looks like a forgotten debugging printing call)?$'

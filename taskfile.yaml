@@ -1,18 +1,21 @@
 version: "3"
+
+env:
+  GOMODULE: github.com/Z00mZE/simple_adder
+
 tasks:
   default:
     cmds:
       - task --list
-  upgrade:
-    desc: "Обновление пакетов приложения"
-    aliases:
-      - upg
+
+  install-protoc:
+    internal: true
+    desc: "Установка утилит для Protobuf"
     cmds:
-      - go get -u all
-      - go mod download
-      - go mod tidy
-      - task:  install-wire
-      - task:  wiregen
+      - go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+      - go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+      - go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+      - go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 
   install-wire:
     internal: true
@@ -20,24 +23,46 @@ tasks:
     cmds:
       - go install github.com/google/wire/cmd/wire@latest
 
-  install-qodana:
-    internal: true
-    desc: "Installation JetBrains Qodana CLI."
-    cmds:
-      - go install github.com/JetBrains/qodana-cli@latest
-
   install-utils:
     desc: "Installation utility packages"
     cmds:
+      - task: install-protoc
       - task: install-wire
-#      - task: install-qodana
 
-  wiregen:
+  upgrade:
+    desc: "Обновление пакетов приложения"
+    aliases:
+      - up
+    cmds:
+      - go get -u all
+      - go mod download
+      - go mod tidy
+      - task:  install-utils
+      - task:  aiog
+
+  protobuf-generate:
+    desc: "Регенерация файлов proto-файлов"
+    aliases:
+      - pbg
+    cmds:
+      - protoc -I ./ --go_out=./ --go_opt="module=${GOMODULE}" ./pb/*.proto
+      - protoc -I ./ --go-grpc_out=require_unimplemented_servers=false:. --go-grpc_opt="module=${GOMODULE}" ./pb/*.proto
+      - protoc -I ./ --grpc-gateway_out=. --grpc-gateway_opt="module=${GOMODULE}" --openapiv2_out ./ ./pb/*.proto
+
+  wire-generate:
     aliases:
       - wg
     desc: wire di codegen
     cmds:
       - wire gen ./...
+
+  all-in-one-gen:
+    desc: full code generation
+    aliases:
+      - aiog
+    cmds:
+      - task: pbg
+      - task: wg
 
   lint:
     desc: "Запуск линтера"

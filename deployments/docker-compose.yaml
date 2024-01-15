@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  s1:
+    build:
+      context: ../
+      dockerfile: deployment/adder.Dockerfile
+    environment:
+      - NAME=s1
+      - GRPC_PORT=50051
