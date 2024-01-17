@@ -26,10 +26,11 @@ gRPC сервер для сложения 2х целочисленных зна�
 $ task
 task: [default] task --list
 task: Available tasks for this project:
-* install-utils:       Installation utility packages
-* lint:                Запуск линтера
-* lint-fix:            Запуск линтера с авто-исправлением предупреждений
-* upgrade:             Обновление пакетов приложения      (aliases: upg)
-* wiregen:             wire di codegen                    (aliases: wg)
-
+* all-in-one-gen:          full code generation      (aliases: aiog)
+* install-utils:           Installation utility packages
+* lint:                    Запуск линтера
+* lint-fix:                Запуск линтера с авто-исправлением предупреждений
+* protobuf-generate:       Регенерация файлов proto-файлов      (aliases: pbg)
+* upgrade:                 Обновление пакетов приложения        (aliases: up)
+* wire-generate:           wire di codegen                      (aliases: wg)
 ```
