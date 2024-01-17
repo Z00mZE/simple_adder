@@ -6,9 +6,9 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/Z00mZE/simple_adder/internal/domain/transport"
-	"github.com/Z00mZE/simple_adder/internal/transport/rpc"
-	"github.com/Z00mZE/simple_adder/pkg/logger/sl"
+	"github.com/Z00mZE/simple_adder/internal/adder/domain/transport"
+	"github.com/Z00mZE/simple_adder/internal/adder/transport/rpc"
+	"github.com/Z00mZE/simple_adder/internal/pkg/logger/sl"
 )
 
 type Adder struct {

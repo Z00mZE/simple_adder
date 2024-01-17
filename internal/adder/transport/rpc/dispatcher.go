@@ -5,8 +5,8 @@ import (
 
 	"github.com/google/wire"
 
-	"github.com/Z00mZE/simple_adder/internal/domain/service"
-	"github.com/Z00mZE/simple_adder/internal/domain/transport"
+	"github.com/Z00mZE/simple_adder/internal/adder/domain/transport"
+	"github.com/Z00mZE/simple_adder/internal/adder/domain/usecase"
 	"github.com/Z00mZE/simple_adder/pb"
 )
 
@@ -16,10 +16,10 @@ var WireDispatcherSet = wire.NewSet(
 )
 
 type Dispatcher struct {
-	sumService service.Sum
+	sumService usecase.Sum
 }
 
-func NewDispatcher(srv transport.ServiceRegistrar, sumService service.Sum) *Dispatcher {
+func NewDispatcher(srv transport.ServiceRegistrar, sumService usecase.Sum) *Dispatcher {
 	self := &Dispatcher{
 		sumService: sumService,
 	}

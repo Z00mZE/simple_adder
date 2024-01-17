@@ -5,6 +5,7 @@ import (
 )
 
 type Settings struct {
+	LogLevel string `envconfig:"LOG_LEVEL" default:"vasya" example:"prod,test,dev"`
 	AppName  string `envconfig:"NAME" default:"vasya"`
 	GrpcPort uint16 `envconfig:"GRPC_PORT" default:"50051"`
 }

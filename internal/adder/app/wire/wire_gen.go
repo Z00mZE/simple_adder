@@ -4,15 +4,15 @@
 //go:build !wireinject
 // +build !wireinject
 
-package adder
+package wire
 
 import (
 	"context"
-	"github.com/Z00mZE/simple_adder/internal/app"
-	"github.com/Z00mZE/simple_adder/internal/conf"
-	"github.com/Z00mZE/simple_adder/internal/service/sum"
-	"github.com/Z00mZE/simple_adder/internal/transport/rpc"
-	"github.com/Z00mZE/simple_adder/pkg/logger"
+	"github.com/Z00mZE/simple_adder/internal/adder/app"
+	"github.com/Z00mZE/simple_adder/internal/adder/conf"
+	"github.com/Z00mZE/simple_adder/internal/adder/transport/rpc"
+	"github.com/Z00mZE/simple_adder/internal/adder/usecase/sum"
+	"github.com/Z00mZE/simple_adder/internal/pkg/logger"
 )
 
 // Injectors from wire.go:
@@ -22,13 +22,13 @@ func InitApplication(ctx context.Context) (*app.Adder, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	slogLogger := logger.NewLogger()
+	slogLogger := logger.NewLogger(settings)
 	server, cleanup, err := rpc.NewServer(ctx, settings, slogLogger)
 	if err != nil {
 		return nil, nil, err
 	}
-	service := sum.NewService()
-	dispatcher := rpc.NewDispatcher(server, service)
+	useCase := sum.NewUseCase(slogLogger)
+	dispatcher := rpc.NewDispatcher(server, useCase)
 	adder := app.NewAdder(ctx, server, server, dispatcher, slogLogger)
 	return adder, func() {
 		cleanup()

@@ -15,8 +15,8 @@ import (
 	"google.golang.org/grpc/reflection"
 	"google.golang.org/grpc/status"
 
-	"github.com/Z00mZE/simple_adder/internal/conf"
-	"github.com/Z00mZE/simple_adder/internal/domain/transport"
+	"github.com/Z00mZE/simple_adder/internal/adder/conf"
+	"github.com/Z00mZE/simple_adder/internal/adder/domain/transport"
 )
 
 type Server struct {
